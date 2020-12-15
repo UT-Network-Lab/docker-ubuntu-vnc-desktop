@@ -10,11 +10,6 @@ RUN apt update && apt install -y qemu-user-static
 FROM arm64v8/ubuntu:18.04 as system
 COPY --from=amd64 /usr/bin/qemu-aarch64-static /usr/bin/
 
-
-
-RUN sed -i 's#http://archive.ubuntu.com/ubuntu/#mirror://mirrors.ubuntu.com/mirrors.txt#' /etc/apt/sources.list;
-
-
 # built-in packages
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt update \
@@ -76,10 +71,6 @@ RUN apt-get update \
 # builder
 ################################################################################
 FROM ubuntu:18.04 as builder
-
-
-RUN sed -i 's#http://archive.ubuntu.com/ubuntu/#mirror://mirrors.ubuntu.com/mirrors.txt#' /etc/apt/sources.list;
-
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends curl ca-certificates gnupg patch
